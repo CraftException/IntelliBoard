@@ -1,0 +1,25 @@
+<table><tr>
+        <% toolbar.forEach(function(toolbar_icon) { %>
+            <td style="
+                <% if(toolbar_icon["padding-right"]) { %>
+                    margin-right: 40px !important;padding-right: 40px
+                <% } else { %>
+                    margin-right: 15px !important;padding-right: 15px
+                <% } %>
+            ">
+                <center>
+                    <% if (toolbar_icon.dropup) { %>
+                        <div class="dropup">
+                            <i id="<%= toolbar_icon.name %>Tool" style="font-size: 40px" class="<%= toolbar_icon.image %> toolbar_tool"></i>
+                            <div class="dropup-content">
+                                <% toolbar_icon.dropupData.forEach(function(dropup_text) { %>
+                                    <a id="<%= dropup_text %>Vector" onclick="useSubTool('<%= toolbar_icon.name %>Tool', '<%= dropup_text %>')"><%= lang.toolbarVectorDropup[dropup_text] %></a>
+                                <% }); %>
+                            </div>
+                        </div>
+                    <% } else { %>
+                        <i id="<%= toolbar_icon.name %>Tool" onclick="useTool('<%= toolbar_icon.name %>Tool')" style="font-size: 40px" class="<%= toolbar_icon.image %> toolbar_tool"></i>
+                    <% } %>
+                </center>
+            </td>
+        <% }); %>

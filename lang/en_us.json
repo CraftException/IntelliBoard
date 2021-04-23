@@ -1,0 +1,29 @@
+{
+  "global": {
+    "id": "en_us",
+    "language": "English",
+    "version": "1"
+  },
+  "headers": {
+    "name": "IntelliBoard",
+    "empty_Title": "Welcome to IntelliBoard!",
+    "titles": {
+      "home": "Homepage",
+      "board": "Board"
+    },
+    "descriptions": {
+      "home": "Welcome to IntelliBoard!"
+    }
+  },
+  "headerbar": {
+    "backToHome": "Back to Overview",
+    "undo": "Undo",
+    "redo": "Redo"
+  },
+  "toolbarVectorDropup": {
+    "hline": "Horicontal Line",
+    "vline": "Vertical Line",
+    "rect":  "Rectangle",
+    "line": "Line"
+  }
+}

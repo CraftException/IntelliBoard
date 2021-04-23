@@ -1,0 +1,26 @@
+<!-- Title -->
+<% if (title) { %>
+    <title><%= lang.headers.titles[title] %> - <%= lang.headers.name %></title>
+<% } else { %>
+    <title><%= lang.headers.empty_Title %></title>
+<% } %>
+
+<!-- Meta Tags -->
+<meta name="author" content="CraftException">
+<meta name="description" content="<%= lang.headers.descriptions["title_id"] %>">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- JQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+
+<!-- Font Awesome -->
+<script src="https://kit.fontawesome.com/a076d05399.js"></script>
+<link rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
+      integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
+      crossorigin="anonymous">
+
+<!-- Stylesheets -->
+<link rel="stylesheet" href="/stylesheets/<%= stylesheets %>.css" type="text/css">

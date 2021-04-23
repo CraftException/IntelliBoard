@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('partials/header', { lang: lang, title: title, stylesheets: 'board'}); %>
+</head>
+
+<body>
+
+        <!--Tool Header-->
+        <center><div class="header" id="header">
+            <%- include('partials/Board/headerbar', { colors: colors }); %>
+        </div></center>
+
+        <!--Canvas Content-->
+        <div id="content" class="canvascontent">
+            <!-- Grid Canvas --><img
+                    src=""
+                    id="gridImage"
+                    style="width: 100%;height: 100%;position: absolute;top:0;left:0;background-color: white;"
+            />
+
+            <!-- Other Content --><div
+                    id="otherContents"
+                    style="width: 100%;height: 100%;position: absolute;top:0;left:0"
+            ></div>
+
+            <!-- Brush Canvas --><canvas
+                    id="brush"
+                    style="width: 100%;height: 100%;background-color: transparent; position: absolute;top:0;left:0"
+            ></canvas>
+        </div>
+
+        <!--Brush View at bottom-->
+        <div class="brushview" style="background-color: #F5F5F5;">
+            <%- include('partials/Board/toolbar', { toolbar: toolbar }); %>
+        </div>
+
+        <script>var exports = {};function require(a){}</script>
+        <script src="GridManager.js"></script>
+        <script src="HeaderToolManager.js"></script>
+        <script src="ToolManager.js"></script>
+        <script src="Model.js"></script>
+        <script src="CanvasBuilder.js"></script>
+        <script src="IntelliBoard.js"></script>
+    </body>
+
+</html>

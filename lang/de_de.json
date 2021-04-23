@@ -1,0 +1,29 @@
+{
+  "global": {
+    "id": "de_de",
+    "language": "Germany",
+    "version": "1"
+  },
+  "headers": {
+    "name": "IntelliBoard",
+    "empty_Title": "Wilkommen zu IntelliBoard!",
+    "titles": {
+      "home": "Startseite",
+      "board": "Tafel"
+    },
+    "descriptions": {
+      "home": "Wilkommen zu IntelliBoard!"
+    }
+  },
+  "headerbar": {
+    "backToHome": "Zurück zur Übersicht",
+    "undo": "Rückgängig",
+    "redo": "Wiederholen"
+  },
+  "toolbarVectorDropup": {
+    "hline": "Horizontale Linie",
+    "vline": "Vertikale Linie",
+    "rect":  "Rechteck",
+    "line": "Linie"
+  }
+}

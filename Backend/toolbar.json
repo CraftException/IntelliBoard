@@ -1,0 +1,51 @@
+[
+  {
+    "name": "pointer",
+    "image": "fas fa-mouse-pointer",
+    "padding-right": false,
+    "dropup": false
+  }, {
+    "name": "brush",
+    "image": "fas fa-pen",
+    "padding-right": false,
+    "dropup": false
+  },  {
+    "name": "erase",
+    "image": "fas fa-eraser",
+    "padding-right": false,
+    "dropup": false
+  },  {
+    "name": "marker",
+    "image": "fas fa-paint-brush",
+    "padding-right": false,
+    "dropup": false
+  },  {
+    "name": "media",
+    "image": "fas fa-photo-video",
+    "padding-right": false,
+    "dropup": false
+  },  {
+    "name": "font",
+    "image": "fas fa-fontfas fa-font",
+    "padding-right": false,
+    "dropup": false
+  },  {
+    "name": "vector",
+    "image": "fas fa-vector-square",
+    "padding-right": true,
+    "dropup": true,
+    "dropupData": [
+      "hline", "vline", "rect", "line"
+    ]
+  },  {
+    "name": "grid",
+    "image": "fas fa-border-all",
+    "padding-right": false,
+    "dropup": false
+  },  {
+    "name": "pagedown",
+    "image": "fas fa-arrow-circle-down",
+    "padding-right": false,
+    "dropup": false
+  }
+]

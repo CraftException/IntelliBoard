@@ -1,0 +1,10 @@
+# Node Modules
+/node_modules/
+package-lock.json
+
+# IntelliJ IDEA Files
+/.idea/
+IntelliBoard-final.iml
+
+# JavaScript Files
+*.js

@@ -35,12 +35,19 @@
             <%- include('partials/Board/toolbar', { toolbar: toolbar }); %>
         </div>
 
-        <script>var exports = {};function require(a){}</script>
+        <script>
+            var exports = {};
+            function require(a){}
+
+            $('.brushview').draggable();
+            $('.header').draggable();
+        </script>
         <script src="GridManager.js"></script>
         <script src="HeaderToolManager.js"></script>
         <script src="ToolManager.js"></script>
         <script src="Model.js"></script>
         <script src="CanvasBuilder.js"></script>
+        <script src="DragDropAPI.js"></script>
         <script src="IntelliBoard.js"></script>
     </body>
 

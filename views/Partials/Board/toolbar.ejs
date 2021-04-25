@@ -18,7 +18,11 @@
                             </div>
                         </div>
                     <% } else { %>
+                        <% if (toolbar_icon.act != false) { %>
+                                <i id="<%= toolbar_icon.name %>Tool" onclick="<%= toolbar_icon.act %>()" style="font-size: 40px" class="<%= toolbar_icon.image %> toolbar_tool"></i>
+                        <% } else { %>
                         <i id="<%= toolbar_icon.name %>Tool" onclick="useTool('<%= toolbar_icon.name %>Tool')" style="font-size: 40px" class="<%= toolbar_icon.image %> toolbar_tool"></i>
+                        <% } %>
                     <% } %>
                 </center>
             </td>

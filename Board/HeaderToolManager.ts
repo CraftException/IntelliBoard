@@ -9,7 +9,7 @@ var colors = [
 ]
 
 var selectedColor = colors[0]
-var selectedWidth = 5
+var selectedWidth = 3
 
 function resetWidths() {
     document.getElementById('width3').classList.remove('activedot');
@@ -27,7 +27,6 @@ function resetColors() {
     document.getElementById('color4').classList.remove('activedot');
     document.getElementById('color5').classList.remove('activedot');
     document.getElementById('color6').classList.remove('activedot');
-    document.getElementById('color7').classList.remove('activedot');
 }
 
 function addWidthClass(id) {
@@ -41,7 +40,7 @@ function addColorClass(id) {
 function setColor(color) {
     resetColors();
     addColorClass("color" + color);
-    selectedColor = color;
+    selectedColor = colors[color-1];
 }
 
 function setWidth(width) {

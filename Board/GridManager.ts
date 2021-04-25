@@ -1,7 +1,5 @@
 import {Dimension, GridData} from "./Model";
 
-export module GridManager {
-
     export function buildGrid(gridData:GridData):HTMLElement {
         const image:any = document.getElementById("gridImage")
 
@@ -9,6 +7,11 @@ export module GridManager {
         image.src = data;
 
         return image;
+    }
+
+    export function clearGrid() {
+        const image:any = document.getElementById("gridImage")
+        image.src = null;
     }
 
     function createCanvas(data:GridData, size:Dimension):HTMLCanvasElement {
@@ -70,5 +73,3 @@ export module GridManager {
 
         return canvas
     }
-
-}

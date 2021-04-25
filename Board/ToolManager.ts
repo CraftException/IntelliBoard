@@ -16,12 +16,14 @@ function resetSizes() {
 }
 
 function useTool(tool:string) {
+
     resetSizes();
 
     const toolNode:HTMLElement = document.getElementById(tool);
     toolNode.style.fontSize = SELECTED_SIZE + "px";
 
     selectedTool = tool.substring(0, tool.length - 4);
+    selectedSubTool = null;
 }
 
 function useSubTool(parent:string, tool:string) {

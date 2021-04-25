@@ -13,7 +13,7 @@ const router = express.Router();
 // Add all languages to Router
 JSON.parse(fs.readFileSync("lang/languages.json", "utf-8")).forEach(lang => {
   // Add Lang Router
-  router.get(`/${lang}/`, function (req, res, next):void {
+  router.get(`/${lang}/board`, function (req, res, next):void {
     // Render template in views/board.ejs
     res.render('board', {
       lang: loadLanguage(lang), // Language file

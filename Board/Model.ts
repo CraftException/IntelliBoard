@@ -11,7 +11,7 @@ export interface BrushContent extends Content {
 }
 
 export interface RectContent extends Content {
-    startPos:Dimension,
+    pos:Dimension,
     width:number,
     height:number
     color:string,
@@ -49,9 +49,16 @@ export interface GridData {
     color:string
 }
 
+export interface BrushBorderMordel {
+    borderType:string,
+    id:number
+    pos:Dimension,
+    width:number
+}
+
 export interface BorderMordel {
     borderType:string,
     id:number
-    TopLeftPos:Dimension,
-    BottomRightPos:Dimension
+    topLeftPos:Dimension,
+    bottomRightPos:Dimension
 }

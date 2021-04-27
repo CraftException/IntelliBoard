@@ -28,6 +28,8 @@ export var gridData:GridData = {
     size: 30
 }
 
+var undoList:Content[] = [];
+
 var isMouseDown:boolean = false;
 
 var temporaryData:Content = null;
@@ -144,6 +146,22 @@ function toggleGrid() {
     }
 }
 
+function undo() {
+    console.log("REMOVE " + JSON.stringify(contents[contents.length-2]))
+    console.log("OFFSET  " + (contents.length-2))
+    undoList.push(contents[contents.length-2])
+    //@ts-ignore
+    contents.splice(contents.length-2, 1)
+    updateCanvas()
+}
+
+function redo() {
+    contents.push(undoList[undoList.length-2])
+    //@ts-ignore
+    undoList.splice(undoList.length-2, 1)
+    updateCanvas()
+}
+
 function canvas_mouseDown(e) {
     updatePosition(e);
     isMouseDown = true;
@@ -183,7 +201,9 @@ function canvas_mouseDown(e) {
 }
 
 function canvas_mouseUp(e) {
-    contents.push(temporaryData);
+    if (temporaryData != null) {
+        contents.push(temporaryData);
+    }
     temporaryData = null;
     isMouseDown = false;
 }
@@ -219,7 +239,7 @@ function canvas_mouseMove(e) {
             var offset = 0;
             contents.forEach(content => {
                 if (content != null) {
-                    if (content.type == "brush") {
+                    if (content.type == "brush" || content.type == "Marker") {
                         const brushContent = <BrushContent>content;
 
                         var borderOffset = 0;

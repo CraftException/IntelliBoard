@@ -1,3 +1,6 @@
+// IntelliBoard - Copyright (C) 2021 Moritz Kaufmann
+// Language Loader
+
 // Import File Syytem
 import * as fs from "fs";
 

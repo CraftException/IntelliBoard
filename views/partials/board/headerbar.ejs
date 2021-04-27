@@ -1,3 +1,6 @@
+<% //IntelliBoard - Copyright (C) 2021 Moritz Kaufmann %>
+<% //Headerbar Partial Template %>
+
 <table>
     <tr>
         <!-- Back to Overview -->
@@ -26,7 +29,7 @@
         </td>
 
         <!-- Undo / Redo -->
-        <td style="margin-right: 20px !important; padding-left: 25px"><center><button style="text-decoration: none; border: 0; background-color: transparent; color: #000000" id="undo" class="unselectable"><i style="font-size: 20px; margin-bottom: 5px" class="fas fa-undo"></i><br><%= lang.headerbar.undo %></button></center></td>
-        <td style="margin-left: 20px !important; padding-left: 20px; padding-right: 40px;"><center><button style="text-decoration: none; border: 0; background-color: transparent; color: #000000" class="unselectable"><i style="font-size: 20px; margin-bottom: 5px" class="fas fa-redo"></i><br><%= lang.headerbar.redo %></button></center></td>
+        <td style="margin-right: 20px !important; padding-left: 25px"><center><button style="text-decoration: none; border: 0; background-color: transparent; color: #000000" onclick="undo()" id="undo" class="unselectable"><i style="font-size: 20px; margin-bottom: 5px" class="fas fa-undo"></i><br><%= lang.headerbar.undo %></button></center></td>
+        <td style="margin-left: 20px !important; padding-left: 20px; padding-right: 40px;"><center><button style="text-decoration: none; border: 0; background-color: transparent; color: #000000" onclick="redo()" class="unselectable"><i style="font-size: 20px; margin-bottom: 5px" class="fas fa-redo"></i><br><%= lang.headerbar.redo %></button></center></td>
     </tr>
 </table>

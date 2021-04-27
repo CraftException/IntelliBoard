@@ -1,3 +1,32 @@
-<h1><%= message %></h1>
-<h2><%= error.status %></h2>
-<pre><%= error.stack %></pre>
+<!-- IntelliBoard - Copyright (C) 2021 Moritz Kaufmann -->
+<!-- Register Template -->
+<html>
+<head>
+    <%- include('partials/header', { lang: lang, title: title, stylesheets: 'Auth'}); %>
+</head>
+<body>
+
+<!-- Modal -->
+<div class="modal">
+
+    <!-- Login Form -->
+    <form class="modal-content animate" method="post">
+        <div class="container">
+
+            <center><h2 style="color: black"><%= lang.error.header %></h2></center>
+
+            <center>
+                <h2><%= errorcode %></h2>
+                <p><%= lang.error.description[errorcode] %></p>
+            </center>
+        </div>
+
+        <!-- Bottom of Form -->
+        <div class="container" style="background-color:#d9d9d9">
+            <center><button type="button" onclick="document.location.href='/'" class="cancelbtn"><%= lang.error.backToHome %></button></center>
+        </div>
+    </form>
+</div>
+
+</body>
+</html>

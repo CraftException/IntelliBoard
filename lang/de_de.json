@@ -9,7 +9,9 @@
     "empty_Title": "Wilkommen zu IntelliBoard!",
     "titles": {
       "home": "Startseite",
-      "board": "Tafel"
+      "board": "Tafel",
+      "login": "Einloggen",
+      "register": "Registrieren"
     },
     "descriptions": {
       "home": "Wilkommen zu IntelliBoard!"
@@ -25,5 +27,25 @@
     "vline": "Vertikale Linie",
     "rect":  "Rechteck",
     "line": "Linie"
+  },
+  "authorization": {
+    "login": {
+      "header": "In IntelliBoard einloggen",
+      "wrongData": "Der Benutername oder das Passwort ist falsch!",
+      "createAccount": "Der Account wurde erstellt!",
+      "updatedPW": "Das Password wurde geändert!",
+      "username": "Benutzname",
+      "password": "Passwort",
+      "login": "Einloggen",
+      "passwordLost": "Password vergessen?",
+      "register": "Neuen Account anlegen"
+    }
+  },
+  "error": {
+    "header": "Ein Fehler ist aufgetreten!",
+    "description": {
+      "404": "Diese Seite wurde nicht gefunden!"
+    },
+    "backToHome": "Zurück zur Startseite"
   }
 }

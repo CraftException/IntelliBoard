@@ -1,0 +1,45 @@
+<!-- IntelliBoard - Copyright (C) 2021 Moritz Kaufmann -->
+<!-- Register Template -->
+<html>
+<head>
+    <%- include('../partials/header', { lang: lang, title: title, stylesheets: 'Auth'}); %>
+</head>
+<body>
+
+<!-- Modal -->
+<div class="modal">
+
+    <!-- Login Form -->
+    <form class="modal-content animate" method="post">
+        <div class="container">
+
+            <center><h2 style="color: black">IntelliBoard-Account erstellen</h2></center>
+
+            <!-- Parameters -->
+            <% if(AlreadyExists) { %>
+            <center><h3 style="color: red;" id="AlreadyExists">Der Benutername oder die Email Adresse existiert bereits!</h3></center>
+            <% } %>
+
+            <!-- Inputs -->
+            <label for="mail"><b>E-Mail Adresse</b></label>
+            <input type="email" placeholder="max@mustermann.de" name="mail" required>
+
+            <label for="username"><b>Benutzername</b></label>
+            <input type="text" placeholder="Max Mustermann" name="username" required>
+
+            <br><br><br>
+            <label for="password"><b>Passwort</b></label>
+            <input type="password" placeholder="" name="password" required>
+
+            <button type="submit">Account erstellen</button>
+        </div>
+
+        <!-- Bottom of Form -->
+        <div class="container" style="background-color:#d9d9d9">
+            <button type="button" onclick="document.location.href='login'" class="cancelbtn">Mit vorhandenem Account anmelden</button>
+        </div>
+    </form>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,32 @@
+<div class="rte" id="richtexteditor" style="display: none">
+    <center class="rte" id="maineditor">
+        <a href="javascript:void(0)" onclick="rte_format('bold')"><span class="rte fa fa-bold fa-fw" style="color: black; font-size: 14px"></span></a>
+        <a href="javascript:void(0)" onclick="rte_format('italic')"><span class="rte fa fa-italic fa-fw" style="color: black; font-size: 14px"></span></a>
+        <a href="javascript:void(0)" onclick="rte_format('insertunorderedlist')"><span class="rte fa fa-list fa-fw" style="color: black; font-size: 14px"></span></a>
+
+        <a href="javascript:void(0)" onclick="rte_fontSize('add')"><span class="rte fa fa-plus" style="padding-left: 15px; color: black; font-size: 14px"></span></a>
+        <a href="javascript:void(0)" onclick="rte_fontSize('remove')"><span class="rte fa fa-minus" style="color: black; font-size: 14px"></span></a>
+
+        <span class="rte"><table>
+            <tr>
+                <td class="rte" style="text-align: center">
+                    <span id="rtecolor1" onclick="rte_setColor(1, '<%= colors[0] %>')" style="margin-left: 0px; background-color: <%= colors[0] %>" class="dot smalldot rte unselectable"></span>
+                    <span id="rtecolor2" onclick="rte_setColor(2, '<%= colors[1] %>')" style="margin-left: 5px; background-color: <%= colors[1] %>" class="dot smalldot rte unselectable"></span>
+                    <span id="rtecolor3" onclick="rte_setColor(3, '<%= colors[2] %>')" style="margin-left: 5px; background-color: <%= colors[2] %>" class="dot smalldot rte unselectable"></span>
+                    <span id="rtecolor4" onclick="rte_setColor(4, '<%= colors[3] %>')" style="margin-left: 5px; background-color: <%= colors[3] %>" class="dot smalldot rte unselectable"></span>
+                    <span id="rtecolor5" onclick="rte_setColor(5, '<%= colors[4] %>')" style="margin-left: 5px; background-color: <%= colors[4] %>" class="dot smalldot rte unselectable"></span>
+                    <span id="rtecolor6" onclick="rte_setColor(6, '<%= colors[5] %>')" style="margin-left: 5px; background-color: <%= colors[5] %>" class="dot smalldot activedot rte unselectable"></span>
+                </td>
+            </tr>
+        </table></span>
+    </center>
+
+    <div id="editcontent" class="rte" style="padding: 5px; width: 300px; height: 300px; overflow: scroll; background-color: white; color: black"></div>
+
+    <center class="rte"><table class="rte">
+        <tr class="rte">
+            <td><i class="rte fas fa-check unselectable" style="font-size: 30px; color: black"; onclick="saveTextContent()"></i></td>
+            <td><i class="rte fas fa-trash unselectable" style="font-size: 30px; color: black"; onclick="deleteTextContent()"></i></td>
+        </tr>
+    </table></center>
+</div>

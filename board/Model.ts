@@ -25,8 +25,7 @@ export interface LineContent extends Content {
 }
 
 export interface FontContent extends Content {
-    color:string,
-    position:Dimension,
+    position:Dimension
     data:string
 }
 

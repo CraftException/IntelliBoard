@@ -88,14 +88,17 @@ JSON.parse(fs.readFileSync("lang/languages.json", "utf-8")).forEach(lang => {
                 const password = hashing.generate(req.body["password"])
                 const databaseID = generateRandomString(10);
 
-                UserHelper.createAccount({
-                    databaseID: databaseID,
-                    mail: mail,
-                    password: password,
-                    displayname: username
-                })
-
-                res.redirect(`/${lang}/login?CreateAccount=true`)
+                if (!(UserHelper.mailExists(mail) && UserHelper.usernameExists(mail))) {
+                    UserHelper.createAccount({
+                        databaseID: databaseID,
+                        mail: mail,
+                        password: password,
+                        displayname: username
+                    })
+                    res.redirect(`/${lang}/login?CreateAccount=true`)
+                } else {
+                    res.redirect(`/${lang}/login?AlreadyExists=true`)
+                }
             } catch (e) {
                 res.redirect(`/${lang}/login`)
             }

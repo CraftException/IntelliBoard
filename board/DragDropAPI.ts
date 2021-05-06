@@ -82,8 +82,8 @@ function dragDrop_mouseDown(e) {
         var y = e.clientY;
 
         var element = isThereAnElement({x: x, y: y});
-        console.log(element)
-        if (!element) {
+        if (element != false) {
+            console.log(`SET TO ${element}`)
             isDragDropMouseDown = true;
             // @ts-ignore
             dragDropID = element;

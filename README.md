@@ -27,6 +27,10 @@ written in Node.JS, using the Express Web-Framework.
 
 1. You have to have Node and NPM installed
 
+2. Set the Server Port in the Environment Variable "PORT" 
+
+
+    PORT=80
 
 2. Clone the repository and navigate to the repository folder:
     
@@ -36,14 +40,26 @@ written in Node.JS, using the Express Web-Framework.
 3. Replace the Contents of the File *backend/mongouri.txt* with your URI of your MongoDB Cluster/Server
 
 
-4. Install all Dependencies and Start the Server:
+4. Install all Dependencies:
 
         npm install
+   
+5. Build Files
+    
+        npm run compile-ts
+   
+6. Start Server
+
         node bin/www
 
 5. To run the Server forever, you can start the Server with screen:
 
         screen -S intelliboard node bin/www
+
+## Information for Firefox and Firefox-Based Browsers
+The current version contains some bugs for Firefox and Firefox-Based Browsers (Tor-Browser...)
+The following Bugs will work perfectly in Google Chrome and Chromium Based Browsers
+- The Color selection in the Rich Text Editor isn't working
 
 ## License
 

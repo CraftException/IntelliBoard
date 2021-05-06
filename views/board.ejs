@@ -38,6 +38,8 @@
             <%- include('partials/board/toolbar', { toolbar: toolbar }); %>
         </div>
 
+        <%- include('partials/board/richtexteditor', { colors: colors }); %>
+
         <!-- Scripts for IntelliBoard -->
         <script>
             var exports = {};
@@ -45,6 +47,10 @@
 
             $('.brushview').draggable();
             $('.header').draggable();
+
+            if(navigator.userAgent.indexOf("Firefox") != -1 ){
+                alert("Information for Firefox Users: This version of IntelliBoard contains some known Bugs for Firefox. Please use Google Chrome or other Chromium based Browsers for better experience with IntelliBoard!")
+            }
         </script>
         <script src="/GridManager.js"></script>
         <script src="/HeaderToolManager.js"></script>
@@ -52,6 +58,7 @@
         <script src="/Model.js"></script>
         <script src="/CanvasBuilder.js"></script>
         <script src="/DragDropAPI.js"></script>
+        <script src="/RichTextEditor.js"></script>
         <script src="/IntelliBoard.js"></script>
     </body>
 

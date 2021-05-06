@@ -1,10 +1,9 @@
-import {BrushContent, Content, Dimension, GridData, LineContent, RectContent} from "./Model";
+import {BrushContent, Content, Dimension, FontContent, GridData, LineContent, RectContent} from "./Model";
 
 export interface IBStorage {
-    colors:number[],
-    grid:boolean,
+    colors:number[]
     gridData:GridData,
-    content:Content[]
+    content:Book[]
 }
 
 export interface Book {
@@ -83,8 +82,10 @@ function updateCanvas() {
 }
 
 function addOffset(element:number, offset:Dimension) {
-    contents[element].offset.x += offset.x
-    contents[element].offset.y += offset.y
+    console.log(element)
+    contents[element].offset.x = 40
+    contents[element].offset.y += 40
+    console.log(contents[element])
 }
 
 function updateTemporaryData() {
@@ -130,6 +131,9 @@ function addToCanvas(content:Content) {
         case "line":
             //@ts-ignore
             drawLineToCanvas(ctx, <LineContent>content)
+        case "font":
+            //@ts-ignore
+            buildText(<FontContent>content)
             break;
     }
 }
@@ -166,6 +170,11 @@ function canvas_mouseDown(e) {
     updatePosition(e);
     isMouseDown = true;
 
+    if (!(e.target.classList.contains("rte"))) {//@ts-ignore
+        if (isEditorOpen)
+            saveTextContent()
+    }
+
     if (selectedTool == 'brush') {
         temporaryData = <BrushContent>{
             offset: {x:0,y:0},
@@ -197,7 +206,41 @@ function canvas_mouseDown(e) {
         } else if (selectedSubTool == 'rect') {
             rectData = {x:0,y:0,w:0,b:0};
         }
+    } else if (selectedTool == 'font') {
+        //@ts-ignore
+        if (isEditorOpen) {
+            return;
+        }
+        //@ts-ignore
+        contents.push(<FontContent>{
+            type: "font",
+            offset: {x:0,y:0},
+            position: {x:getPosition(e).x,y:getPosition(e).y}, //@ts-ignore
+            data: generateBlob("<p>Text goes here...</p>"),
+            rawData: "<p>Text goes here...</p>"
+        });
+        //@ts-ignore
+        openRichTextBox(contents.length-1, contents[contents.length-1].position.x, contents[contents.length-1].position.y, contents[contents.length-1]);
+
+        useTool("pointerTool");
+        updateCanvas();
     }
+}
+
+function saveTextContent() {
+    //@ts-ignore
+    contents[currentBox].rawData = editcontent.innerHTML;//@ts-ignore
+    contents[currentBox].data = generateBlob(editcontent.innerHTML);
+
+    updateCanvas();//@ts-ignore
+    closeRichTextBox();
+}
+
+function deleteTextContent() { //@ts-ignore
+    contents[currentBox] = null
+
+    updateCanvas();//@ts-ignore
+    closeRichTextBox();
 }
 
 function canvas_mouseUp(e) {

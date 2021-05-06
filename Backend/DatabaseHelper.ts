@@ -9,12 +9,62 @@ import * as mongodb from "mongodb";
 
 // Import DeASync
 import * as deasync from "deasync";
+import {Content} from "../board/Model";
 
 // The MongoDB File
 const mongouri = fs.readFileSync("Backend/mongouri.txt", "utf-8");
 
 // MongoDB Details
 const database = "test";
+
+// API for Database Management
+export module DatabaseHelper {
+
+    // The Default Storage for empty databases
+    var defaultStorage = {
+        colors: [
+            "#e94435",
+            "#1bae1b",
+            "yellow",
+            "orange",
+            "#2758d2",
+            "black"
+        ],
+        gridData: {
+            width: 20,
+            size: 2,
+            color: "black"
+        },
+        content: [{
+            displayname: "Mein Buch",
+            pages: [
+                {
+                    pageid: 0,
+                    maxPageHeight: 1920,
+                    maxPageWidth: 1080,
+                    contents: [],
+                    grid: false
+                }
+            ]
+        }]
+    };
+
+    // Generate an empty database
+    export function generateDatabase(token:string) {
+        DatabaseHelper.insertData(database, "Database", {id: token, storage:defaultStorage})
+    }
+
+    // Get a database
+    export function getDatabase(token:string) {
+        return DatabaseHelper.selectData(database, "Database", {id: token}, {})
+    }
+
+    // Update a database
+    export function updateDatabase(token:string, contentUpdate) {
+        DatabaseHelper.updateData(database, "Database", {id: token}, {"$set": {storage: contentUpdate}})
+    }
+
+}
 
 // API for User Management
 export module UserHelper {

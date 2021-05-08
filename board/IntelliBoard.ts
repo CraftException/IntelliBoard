@@ -1,4 +1,4 @@
-import {BrushContent, Content, Dimension, FontContent, GridData, LineContent, RectContent} from "./Model";
+import {BorderMordel, BrushContent, Content, Dimension, FontContent, GridData, LineContent, RectContent} from "./Model";
 
 export interface IBStorage {
     colors:number[]
@@ -170,9 +170,16 @@ function canvas_mouseDown(e) {
     updatePosition(e);
     isMouseDown = true;
 
-    if (!(e.target.classList.contains("rte"))) {//@ts-ignore
+    if (!(e.target.classList.contains("rte") || e.target.parentElement.classList.contains("rte"))) {//@ts-ignore
         if (isEditorOpen)
             saveTextContent()
+    }
+
+    if (selectedTool == 'pointer' || selectedTool == 'font') {
+        if (isThereATextBox(currentMousePosition) !== false) {//@ts-ignore
+            const object = contents[borders[isThereATextBox(currentMousePosition)].id]//@ts-ignore
+            openRichTextBox(borders[isThereATextBox(currentMousePosition)].id, object.position.x, object.position.y, object);
+        }
     }
 
     if (selectedTool == 'brush') {
@@ -217,7 +224,8 @@ function canvas_mouseDown(e) {
             offset: {x:0,y:0},
             position: {x:getPosition(e).x,y:getPosition(e).y}, //@ts-ignore
             data: generateBlob("<p>Text goes here...</p>"),
-            rawData: "<p>Text goes here...</p>"
+            rawData: "<p>Text goes here...</p>",
+            size: 14
         });
         //@ts-ignore
         openRichTextBox(contents.length-1, contents[contents.length-1].position.x, contents[contents.length-1].position.y, contents[contents.length-1]);
@@ -227,20 +235,97 @@ function canvas_mouseDown(e) {
     }
 }
 
-function saveTextContent() {
+function saveTextContent() {//@ts-ignore
     //@ts-ignore
-    contents[currentBox].rawData = editcontent.innerHTML;//@ts-ignore
-    contents[currentBox].data = generateBlob(editcontent.innerHTML);
+    contents[currentBox].rawData = document.getElementById("editcontent").innerHTML;//@ts-ignore
+    contents[currentBox].data = generateBlob(contents[currentBox].rawData);//@ts-ignore
+
+    const actualFontSize = getActualFontSize(contents[currentBox]);
+    //@ts-ignore
+    borders.push({
+        borderType: "font",//@ts-ignore
+        id: currentBox,//@ts-ignore
+        topLeftPos: {x:contents[currentBox].position.x, y:contents[currentBox].position.y+contents[currentBox].size},//@ts-ignore
+        size: contents[currentBox].size,
+        bottomRightPos: {//@ts-ignore
+            x: (contents[currentBox].position.x)+(actualFontSize.width)*2,//@ts-ignore
+            y: (contents[currentBox].position.y)+(actualFontSize.height)+contents[currentBox].size*1.5
+        }
+    })
 
     updateCanvas();//@ts-ignore
     closeRichTextBox();
 }
 
 function deleteTextContent() { //@ts-ignore
-    contents[currentBox] = null
+    contents[currentBox] = null //@ts-ignore
+    clearAllFontBorders(currentBox);
 
     updateCanvas();//@ts-ignore
     closeRichTextBox();
+
+}
+
+function updateFontSize(mode:string) {//@ts-ignore
+    rte_fontSize(mode);//@ts-ignore
+    contents[currentBox].size = currentSize
+}
+
+function clearAllFontBorders (id:string) {
+    var offset = 0;  //@ts-ignore
+    borders.forEach(border => {
+        if (border.id == id)//@ts-ignore
+            borders[offset] = null
+        offset++;
+    })
+}
+
+function getActualFontSize(content:string) {//@ts-ignore
+    const htmlRawData = content.rawData //@ts-ignore
+
+    ctx.font = content.size + "px Arial";
+    const metrics = ctx.measureText('M'); //@ts-ignore
+
+    var width = 0  //@ts-ignore
+    htmlRawData.replaceAll("<br>", "").replaceAll("</p>", "").split("<p>").forEach(line => {
+        if (line != "") {
+            if (width < ctx.measureText(line).width)
+                width = ctx.measureText(line).width
+        }
+    })
+
+    const rawTextHeight = (metrics.width + (metrics.actualBoundingBoxAscent||0) + (metrics.actualBoundingBoxDescent||0))*((htmlRawData.toString().length - htmlRawData.toString().replaceAll("<p","").length)/2)
+    const blankLineHeight = (metrics.width + (metrics.actualBoundingBoxAscent||0) + (metrics.actualBoundingBoxDescent||0))*(((htmlRawData.toString().length - htmlRawData.toString().replaceAll("<p","").length)/2)-1)
+
+    const height = rawTextHeight+blankLineHeight
+    return {width:width, height:height}
+}
+
+function isThereATextBox(position:Dimension):boolean|number {
+    var res:boolean|number = null;
+    var offset = 0; //@ts-ignore
+    borders.forEach(border => {
+        if (border != null) {
+            if (border.borderType == "font") {
+                const isCursorOnPoint = position.x >= border.topLeftPos.x &&
+                    position.x <= border.bottomRightPos.x &&
+                    position.y >= border.topLeftPos.y &&
+                    position.y <= border.bottomRightPos.y
+                ctx.fillRect(
+                    border.topLeftPos.x,
+                    border.topLeftPos.y,
+                    border.bottomRightPos.x - border.topLeftPos.x,
+                    border.bottomRightPos.y - border.topLeftPos.y
+                )
+                if (isCursorOnPoint) res = offset;
+            }
+        }
+        offset++;
+    });
+
+    if (res == null)
+        res = false;
+    return res;
 }
 
 function canvas_mouseUp(e) {

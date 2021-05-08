@@ -19,7 +19,6 @@ function buildText(content:FontContent) {
 
         img.onload = function () {
             buildedImages[content.data] = img
-            console.log([content.position.x, content.position.y, content])
             ctx.drawImage(img, content.position.x, content.position.y);
             // @ts-ignore
 
@@ -33,8 +32,10 @@ function buildText(content:FontContent) {
 
 }
 
-function generateBlob(rawContent:string) {
-    var data = `<svg xmlns="http://www.w3.org/2000/svg" width="${window.innerWidth}" height="${window.innerHeight}">` +
+function generateBlob(rawContent:string) { //@ts-ignore
+    rawContent = rawContent.replaceAll("<br>", "<br></br>")
+    console.log(rawContent)
+    var data = `<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080">` +
         '<foreignObject width="100%" height="100%">' +
         '<div xmlns="http://www.w3.org/1999/xhtml" style="font-size:20px">' +
         `${rawContent}` +
@@ -55,12 +56,13 @@ function generateBlob(rawContent:string) {
 
 function openRichTextBox(id, x, y, content) {
     document.getElementById("richtexteditor").style.display = "block"
-    document.getElementById("richtexteditor").style.left = x-document.getElementById("maineditor").offsetLeft + "px"
-    document.getElementById("richtexteditor").style.top = y-document.getElementById("maineditor").offsetTop + "px"
+    document.getElementById("richtexteditor").style.left = (x-10) + "px"
+    document.getElementById("richtexteditor").style.top = (y-58) + "px"
     document.getElementById("editcontent").innerHTML = content.rawData
 
     isEditorOpen = true;
     currentBox = id;
+    currentSize = 14;
 }
 
 window.addEventListener('load', () => {

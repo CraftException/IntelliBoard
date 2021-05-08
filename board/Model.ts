@@ -25,8 +25,10 @@ export interface LineContent extends Content {
 }
 
 export interface FontContent extends Content {
-    position:Dimension
-    data:string
+    position:Dimension,
+    data:string,
+    size:number,
+    rawData:string
 }
 
 export interface ImageContent extends Content {

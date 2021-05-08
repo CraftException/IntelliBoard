@@ -36,15 +36,18 @@ echo "Set the default port to 3000. To update the port, type 'export PORT=<port>
 
 # Install and Compile typescript
 echo "Build Files..."
-npm install -g typescript
-npm run compile-ts
+sudo npm install
+sudo npm install -g typescript
+sudo npm run compile-ts
 
 # Make shell scripts executable
 chmod +x start.sh
 chmod +x stop.sh 
 
 # Start IntelliBoard
+clear
 echo "IntelliBoard is now installed. It'll start now."
 echo "To stop IntelliBoard, type './stop.sh'"
 echo "To start IntelliBoard again, type './start.sh'"
+echo "----------------------------------------------"
 ./start.sh

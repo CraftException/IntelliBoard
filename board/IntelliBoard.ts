@@ -281,16 +281,17 @@ function clearAllFontBorders (id:string) {
 }
 
 function getActualFontSize(content:string) {//@ts-ignore
-    const htmlRawData = content.rawData //@ts-ignore
+    const htmlRawData = content.rawData;//@ts-ignore
 
     ctx.font = content.size + "px Arial";
     const metrics = ctx.measureText('M'); //@ts-ignore
 
     var width = 0  //@ts-ignore
     htmlRawData.replaceAll("<br>", "").replaceAll("</p>", "").split("<p>").forEach(line => {
-        if (line != "") {
-            if (width < ctx.measureText(line).width)
-                width = ctx.measureText(line).width
+        const rawLine =  new DOMParser().parseFromString(line, 'text/html').body.textContent;
+        if (rawLine != "") {
+            if (width < ctx.measureText(rawLine).width)
+                width = ctx.measureText(rawLine).width
         }
     })
 
@@ -311,12 +312,6 @@ function isThereATextBox(position:Dimension):boolean|number {
                     position.x <= border.bottomRightPos.x &&
                     position.y >= border.topLeftPos.y &&
                     position.y <= border.bottomRightPos.y
-                ctx.fillRect(
-                    border.topLeftPos.x,
-                    border.topLeftPos.y,
-                    border.bottomRightPos.x - border.topLeftPos.x,
-                    border.bottomRightPos.y - border.topLeftPos.y
-                )
                 if (isCursorOnPoint) res = offset;
             }
         }

@@ -27,7 +27,7 @@
     "name": "media",
     "image": "fas fa-photo-video",
     "padding-right": false,
-    "act": false,
+    "act": "alert('This Feature will coming soon!')",
     "dropup": false
   },  {
     "name": "font",

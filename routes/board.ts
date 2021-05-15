@@ -12,6 +12,7 @@ import {loadLanguage} from "../Backend/languages";
 
 // Import Cookie API
 import {CookieAPI} from "../Backend/CookieAPI";
+import {ContentHelper, UserHelper} from "../Backend/DatabaseHelper";
 
 // Get Router
 const router = express.Router();
@@ -25,9 +26,80 @@ JSON.parse(fs.readFileSync("lang/languages.json", "utf-8")).forEach(lang => {
       lang: loadLanguage(lang), // Language file
       colors: JSON.parse(fs.readFileSync("Backend/colors.json", "utf-8")), // Color File
       toolbar: JSON.parse(fs.readFileSync("./Backend/toolbar.json", "utf-8")), // Toolbar File
-      title: "board" // Title
+      title: "board", // Title
+      contents: JSON.stringify(ContentHelper.getDatabase(getDatabaseID(req, res)))
     });
   });
 })
+
+// Router to update Database
+router.post(`/update`, function (req, res, next): void {
+  if (isLoggedIn(req, res)) {
+    if (req.body["newcontent"]) {
+      ContentHelper.updateDatabase(getDatabaseID(req, res), req.body["newcontent"]);
+      res.write("200 OK");
+    } else {
+      res.status(500).write("500 Server Error");
+    }
+  } else {
+    res.status(403).write("302 Not authorized.");
+  }
+  res.end();
+});
+
+// Get if logged in
+function isLoggedIn (req, res):boolean {
+  // Check if credentials Cookie is given
+  if (!CookieAPI.getCookies(req, "credentials")) {
+    return;
+  }
+
+  // Get Cookies
+  const username = JSON.parse(CookieAPI.getCookies(req, "credentials"))["username"]
+  const password = JSON.parse(CookieAPI.getCookies(req, "credentials"))["password"]
+
+  // Do next step, if cookies are defined
+  if (username != undefined && password != undefined) {
+    // Get Account
+    const user = UserHelper.getAccount(username)
+
+    if (!user)
+      return;
+
+    // Check if password is correct
+    return password == user.password
+  }
+
+  // Fallback false
+  return false;
+}
+
+
+// Get Username
+export function getDatabaseID(req, res):string {
+  // Check if credentials Cookie is given
+  if (!CookieAPI.getCookies(req, "credentials")) {
+    return "null";
+  }
+
+  // Get Cookies
+  const username = JSON.parse(CookieAPI.getCookies(req, "credentials"))["username"];
+  const password = JSON.parse(CookieAPI.getCookies(req, "credentials"))["password"];
+
+  // Do next step, if cookies are defined
+  if (username != undefined && password != undefined) {
+    // Get Account
+    const user = UserHelper.getAccount(username);
+
+    if (!user)
+      return;
+
+    // Check if password is correct
+    return user.databaseID;
+  }
+
+  // Fallback false
+  return "null";
+}
 
 module.exports = router;

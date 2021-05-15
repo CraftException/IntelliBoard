@@ -11,7 +11,8 @@
       "home": "Homepage",
       "board": "Board",
       "login": "Login",
-      "register": "Registrieren"
+      "register": "Registrieren",
+      "overview": "Overview"
     },
     "descriptions": {
       "home": "Welcome to IntelliBoard!"
@@ -38,7 +39,31 @@
       "password": "Password",
       "login": "login",
       "passwordLost": "Lost Password?",
-      "register": "Register new Account"
+      "register": "Register new Account",
+      "alreadyExists": "This Username isn't available"
+    }
+  },
+  "overview": {
+    "sidebar": {
+      "header": "IntelliBoard",
+      "books": "My books",
+      "newbook": "Create book",
+      "settings": "Settings",
+      "logout": "Logout"
+    },
+    "books": {
+      "backtooverview": "Back to overview",
+      "pages": "Page(s)",
+      "addpage": "Add Page",
+      "page": "Page"
+    },
+    "settings": {
+      "colors": "Colors",
+      "grid": "Grid"
+    },
+    "newbook": {
+      "nameplaceholder": "Name of the Book",
+      "buttonsubmit": "Create book"
     }
   },
   "error": {

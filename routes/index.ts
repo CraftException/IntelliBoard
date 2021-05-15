@@ -9,6 +9,8 @@ import * as fs from "fs";
 
 // Import Language Backend
 import {loadLanguage} from "../Backend/languages";
+import {CookieAPI} from "../Backend/CookieAPI";
+import getCookies = CookieAPI.getCookies;
 
 // Get Router
 const router = express.Router();
@@ -16,7 +18,7 @@ const router = express.Router();
 // Get Browser Language by Request
 function getLanguage(req):string {
     var lang = req.acceptsLanguages('de', 'en');
-    if (lang == "de") {
+    if (lang == "de" || getCookies(req, "lang") == "de_de") {
         return "de_de";
     } else {
         return "en_us";

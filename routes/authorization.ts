@@ -12,7 +12,7 @@ import {loadLanguage} from "../Backend/languages";
 
 // Import APIs
 import {CookieAPI} from "../Backend/CookieAPI";
-import {generateRandomString, UserHelper} from "../Backend/DatabaseHelper";
+import {ContentHelper, DatabaseHelper, generateRandomString, UserHelper} from "../Backend/DatabaseHelper";
 
 // Import Password Hashing
 import * as hashing from "password-hash";
@@ -43,12 +43,11 @@ JSON.parse(fs.readFileSync("lang/languages.json", "utf-8")).forEach(lang => {
         if (isLoggedIn(req, res)) {
             res.redirect(`/${lang}/overview`)
         } else {
-            try {
+            try {                
                 const username = req.body["username"]
                 const password = req.body["password"]
 
                 if (UserHelper.usernameExists(username)) {
-                    console.log([username, password, UserHelper.getAccount(username).password])
                     if (hashing.verify(password, UserHelper.getAccount(username).password)) {
                         CookieAPI.setCookie(res, "credentials", JSON.stringify({username:username, password: UserHelper.getAccount(username).password}))
                         res.redirect(`/${lang}/overview`)
@@ -88,16 +87,17 @@ JSON.parse(fs.readFileSync("lang/languages.json", "utf-8")).forEach(lang => {
                 const password = hashing.generate(req.body["password"])
                 const databaseID = generateRandomString(10);
 
-                if (!(UserHelper.mailExists(mail) && UserHelper.usernameExists(mail))) {
+                if (!(UserHelper.mailExists(mail)) && !(UserHelper.usernameExists(username))) {
                     UserHelper.createAccount({
                         databaseID: databaseID,
                         mail: mail,
                         password: password,
                         displayname: username
                     })
+                    ContentHelper.generateDatabase(databaseID);
                     res.redirect(`/${lang}/login?CreateAccount=true`)
                 } else {
-                    res.redirect(`/${lang}/login?AlreadyExists=true`)
+                    res.redirect(`/${lang}/register?AlreadyExists=true`)
                 }
             } catch (e) {
                 res.redirect(`/${lang}/login`)
@@ -105,6 +105,15 @@ JSON.parse(fs.readFileSync("lang/languages.json", "utf-8")).forEach(lang => {
         }
     });
 
+})
+
+// Logout Roouter
+router.get("/logout", function(req, res, next):void {
+    // Clear credential cookie
+    CookieAPI.setCookie(res, "credentials", JSON.stringify({}));
+    // Send response
+    res.status(302).redirect("/")
+    res.end();
 })
 
 // Get if logged in

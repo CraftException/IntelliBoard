@@ -13,6 +13,7 @@ import * as coookieparser from "cookie-parser";
 import * as boardRouter from "./routes/board";
 import * as indexRouter from "./routes/index";
 import * as authRouter from "./routes/authorization";
+import * as overviewRouter from "./routes/overview";
 
 // APIs
 import {loadLanguage} from "./Backend/languages";
@@ -35,6 +36,7 @@ app.use(express.static(path.join(__dirname, 'board')));
 app.use(indexRouter);
 app.use(boardRouter);
 app.use(authRouter);
+app.use(overviewRouter);
 
 // 404 Error Page at end of the Router
 app.get('*', function(req, res){

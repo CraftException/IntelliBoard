@@ -18,7 +18,7 @@ const mongouri = fs.readFileSync("Backend/mongouri.txt", "utf-8");
 const database = "test";
 
 // API for Database Management
-export module DatabaseHelper {
+export module ContentHelper {
 
     // The Default Storage for empty databases
     var defaultStorage = {
@@ -40,8 +40,8 @@ export module DatabaseHelper {
             pages: [
                 {
                     pageid: 0,
-                    maxPageHeight: 1920,
-                    maxPageWidth: 1080,
+                    maxPageHeight: 1080,
+                    maxPageWidth: 1920,
                     contents: [],
                     grid: false
                 }
@@ -51,17 +51,18 @@ export module DatabaseHelper {
 
     // Generate an empty database
     export function generateDatabase(token:string) {
-        DatabaseHelper.insertData(database, "Database", {id: token, storage:defaultStorage})
+        DatabaseHelper.insertData(database, "Database", {id: token, storage:JSON.stringify(defaultStorage)})
     }
 
     // Get a database
     export function getDatabase(token:string) {
-        return DatabaseHelper.selectData(database, "Database", {id: token}, {})
+        return DatabaseHelper.selectData(database, "Database", { id: token }, {})[0].storage.replaceAll("`", "&#96;")
     }
 
     // Update a database
     export function updateDatabase(token:string, contentUpdate) {
-        DatabaseHelper.updateData(database, "Database", {id: token}, {"$set": {storage: contentUpdate}})
+        console.log(contentUpdate)
+        DatabaseHelper.updateData(database, "Database", {id: token}, {$set: {storage: contentUpdate}})
     }
 
 }
@@ -99,17 +100,17 @@ export module UserHelper {
 
     // Update Username
     export function updateUsername(oldDisplayName:string, newDisplayName:string) {
-        DatabaseHelper.updateData(database, "User", {displayname:oldDisplayName}, {"$set":{displayname:newDisplayName}})
+        DatabaseHelper.updateData(database, "User", {displayname:oldDisplayName}, {$set:{displayname:newDisplayName}})
     }
 
     // Update Password
     export function updatePassword(displayName:string, password:string) {
-        DatabaseHelper.updateData(database, "User", {displayname:displayName}, {"$set":{password:password}})
+        DatabaseHelper.updateData(database, "User", {displayname:displayName}, {$set:{password:password}})
     }
 
     // Upload a Password with a mail parameter
     export function updatePasswordByMail(mail:string, password:string) {
-        DatabaseHelper.updateData(database, "User", {mail:mail}, {"$set":{password:password}})
+        DatabaseHelper.updateData(database, "User", {mail:mail}, {$set:{password:password}})
     }
 
 }

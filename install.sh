@@ -50,4 +50,4 @@ echo "IntelliBoard is now installed. It'll start now."
 echo "To stop IntelliBoard, type './stop.sh'"
 echo "To start IntelliBoard again, type './start.sh'"
 echo "----------------------------------------------"
-./start.sh
+sudo ./start.sh

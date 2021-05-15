@@ -37,12 +37,14 @@ IntelliBoard is a Paintbrush Application, optimized for Whiteboards and Touchscr
 
 ## Try IntelliBoard
 
-You may test IntelliBoard with all of it's features [here.](https://intelliboard.craftexception.de)
+You may test IntelliBoard with all of it's features [here.](https://intelli-board.eu)
 You can create your own Account, or use this credentials:
--Email: test@intelliboard.com
+-Username: sandbox
 -Password: ib-sandbox
 
 ## Build and Run IntelliBoard
+
+### 1. Build and Install on a Root-Server
 
 1. Download the Install Script from this repository:
 
@@ -55,6 +57,38 @@ You can create your own Account, or use this credentials:
 
 To stop the Server go into the _intelliboard_ Folder and type _./stop.sh_
 To start the Server again type _./start.sh_
+
+### 2. Run on a Plesk Server
+
+Prerequisites on your local Computer:
+ - Node.js and NPM
+ - TypeScript (npm install -g typescript)
+ - Git
+
+1. You need to clone the repository to your computer
+
+    
+    git clone https://github.com/CraftException/IntelliBoard
+
+2. Compile all TypeScript Files
+
+    
+    npm run compile-ts
+
+3. Login to your Plesk Panel. Create a Domain like you want it.
+
+4. Upload all Files to any Directory on the Plesk-Server.
+
+5. Go to Node.js on the domain overview.
+
+6. Set "Document Root" and "Application Root" to the Directory you uploaded the compiled Repository
+
+7. Set the Application startup file to "bin/www"
+
+8. Click "Activate Node.js"
+
+Your Settings should look like this:
+![img.png](https://i.imgur.com/mxwD0Fn.png)
 
 ## Information for Firefox Users
 The current version contains some bugs for Firefox and Firefox-Based Browsers (Tor-Browser...)  
@@ -135,4 +169,4 @@ You can create other languages and create a Pull Request. I will merge them as f
 
 ## License
 
-IntelliBoard is licensed by the MIT-License  
+IntelliBoard is licensed under the MIT-License  

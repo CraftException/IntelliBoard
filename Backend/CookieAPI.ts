@@ -9,7 +9,7 @@ export module CookieAPI {
 
     // Set a cookie
     export function setCookie (res, key:string, value:string) {
-        res.cookie(key, value, { maxAge: 900000, httpOnly: true });
+        res.cookie(key, value, { maxAge: 9000000, httpOnly: true });
     }
 
     // Does a cookie exists?

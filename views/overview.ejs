@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <%- include('partials/header', { lang: lang, title: title, stylesheets: 'overview'}); %>
+</head>
+<body>
+<% parsedContents = contents %>
+
+    <div class="sidebar">
+        <p>
+            <%= lang.overview.sidebar.header %>
+        </p>
+        <a href="overview?page=my_books" <% if(page == "my_books"){%>class="active"<%}%> ><i class="fas fa-book" style="padding-right: 8px"></i><%= lang.overview.sidebar.books %></a>
+        <a href="overview?page=add_book" <% if(page == "add_book"){%>class="active"<%}%>><i class="fas fa-plus" style="padding-right: 8px"></i><%= lang.overview.sidebar.newbook %></a>
+        <a href="overview?page=settings" <% if(page == "settings"){%>class="active"<%}%>><i class="fas fa-cog" style="padding-right: 8px"></i><%= lang.overview.sidebar.settings %></a>
+        <a href="/logout" class="red"><i class="fas fa-sign-out-alt" style="padding-right: 8px"></i><%= lang.overview.sidebar.logout %></a>
+    </div>
+
+    <div class="content">
+        <% if (page == "my_books") { %>
+            <% if (displayname) { %>
+                <% parsedContents.content.forEach(function(content){ %>
+                    <% if(content.displayname == displayname) { %>
+                        <% bookData = content %>
+                        <h1 style="padding: 30px;"><%= displayname %><br><%= content.pages.length %> <%= lang.overview.books.pages %></h1>
+                        <section class="columns">
+                            <div class="column" onclick="document.location.href='overview?page=my_books'">
+                                <h3><i style="font-size: 30px;" class="fas fa-backward"></i><br><%= lang.overview.books.backtooverview %></h3>
+                            </div>
+                            <div class="column" onclick="document.location.href='overview?page=my_books&displayname=<%= displayname %>&addpage=true'">
+                                <h3><i style="font-size: 30px;" class="fas fa-plus"></i><br><%= lang.overview.books.addpage %></h3>
+                            </div>
+                        </section><br><br>
+                        <section class="columns">
+                            <% pageLength = content.pages.length %>
+                            <% content.pages.forEach(function (page) { %>
+                                <% pageContent = page %>
+                                <div style="margin: 5px; margin-bottom: 15px; width: <%- pageContent.maxPageWidth/10+20 %>px; height:<%- pageContent.maxPageHeight/10+40 %>px;" class="column" onclick="document.location.href='overview?page=my_books&displayname=<%= content.displayname %>'">
+                                    <a href="board?book=<%= displayname %>&id=<%- pageContent.pageid %>" id="content<%- pageContent.pageid %>">The Image is loading...</a>
+                                    <%= lang.overview.books.page %> <%- pageContent.pageid %>
+                                </div>
+                            <% }) %>
+                        </section>
+                    <% } %>
+                <% }) %>
+            <% } else { %>
+                    <h1 style="padding: 30px;"><%= lang.overview.sidebar.books %></h1>
+                    <section class="columns">
+                        <% parsedContents.content.forEach(function(content){ %>
+                            <div class="column" onclick="document.location.href='overview?page=my_books&displayname=<%= content.displayname %>'">
+                                <h3><%= content.displayname %></h3>
+                                <h5><%= content.pages.length %> <%= lang.overview.books.pages %></h5>
+                            </div>
+                        <% }) %>
+                    </section>
+            <% } %>
+        <% } %>
+        <% if (page == "add_book") { %>
+            <h1 style="padding: 30px;"><%= lang.overview.sidebar.newbook %></h1>
+            <form method="post" style="max-width: 800px;">
+                <input name="name" type="text" placeholder="<%= lang.overview.newbook.nameplaceholder %>" required>
+                <button name="add_book" type="submit"><center><%= lang.overview.newbook.buttonsubmit %></center></button>
+            </form>
+        <% } %>
+        <% if (page == "settings") { %>
+                <h1 style="padding: 30px;"><%= lang.overview.sidebar.settings %></h1>
+                <h2 style="padding-left: 30px;"><%= lang.overview.settings.colors %></h2>
+                <div style="margin: 30px">
+                    <span style="padding: 15px;">1. Color</span><input type="color" id="color1" value="<%= parsedContents.colors[0] %>" placeholder="Color 1"><br><br>
+                    <span style="padding: 15px;">2. Color</span><input type="color" id="color2" placeholder="Color 1"><br><br>
+                    <span style="padding: 15px;">3. Color</span><input type="color" id="color3" placeholder="Color 1"><br><br>
+                    <span style="padding: 15px;">4. Color</span><input type="color" id="color4" placeholder="Color 1"><br><br>
+                    <span style="padding: 15px;">5. Color</span><input type="color" id="color5" placeholder="Color 1"><br><br>
+                    <span style="padding: 15px;">6. Color</span><input type="color" id="color6" placeholder="Color 1"><br><br>
+                </div>
+                <h2 style="padding-left: 30px;"><%= lang.overview.settings.grid %></h2>
+                <span style="padding: 42px;">Color</span><input type="color" id="gridColor" value="<%= parsedContents.gridData.color %>" placeholder="Color 1"><br><br>
+                <span style="padding: 42px;">Size</span><input type="number" id="gridWidth" value="<%= parsedContents.gridData.width %>"><br><br>
+                <span style="padding: 42px;">Width</span><input type="number" id="gridSize" value="<%= parsedContents.gridData.size %>"><br><br>
+        <% } %>
+    </div>
+
+    <script>
+        var exports = {};
+        function require(a) {}
+
+        var parsedContent = JSON.parse(`<%- JSON.stringify(parsedContents) %>`).replaceAll("&#96;", "´");
+
+        <% if (page == "settings") { %>
+        document.getElementById("color1").value = "<%= parsedContents.colors[0] %>".startsWith("#")? "<%= parsedContents.colors[0] %>" : colourNameToHex( "<%= parsedContents.colors[0] %>")
+        document.getElementById("color2").value = "<%= parsedContents.colors[1] %>".startsWith("#")? "<%= parsedContents.colors[1] %>" : colourNameToHex( "<%= parsedContents.colors[1] %>")
+        document.getElementById("color3").value = "<%= parsedContents.colors[2] %>".startsWith("#")? "<%= parsedContents.colors[2] %>" : colourNameToHex( "<%= parsedContents.colors[2] %>")
+        document.getElementById("color4").value = "<%= parsedContents.colors[3] %>".startsWith("#")? "<%= parsedContents.colors[3] %>" : colourNameToHex( "<%= parsedContents.colors[3] %>")
+        document.getElementById("color5").value = "<%= parsedContents.colors[4] %>".startsWith("#")? "<%= parsedContents.colors[4] %>" : colourNameToHex( "<%= parsedContents.colors[4] %>")
+        document.getElementById("color6").value = "<%= parsedContents.colors[5] %>".startsWith("#")? "<%= parsedContents.colors[5] %>" : colourNameToHex( "<%= parsedContents.colors[5] %>")
+
+        document.getElementById(`color1`).onchange = () => {
+            parsedContent.colors[0] = document.getElementById(`color1`).value;
+            updateContent(parsedContent);
+        }
+        document.getElementById(`color2`).onchange = () => {
+            parsedContent.colors[1] = document.getElementById(`color2`).value;
+            updateContent(parsedContent);
+        }
+        document.getElementById(`color3`).onchange = () => {
+            parsedContent.colors[2] = document.getElementById(`color3`).value;
+            updateContent(parsedContent);
+        }
+        document.getElementById(`color4`).onchange = () => {
+            parsedContent.colors[3] = document.getElementById(`color4`).value;
+            updateContent(parsedContent);
+        }
+        document.getElementById(`color5`).onchange = () => {
+            parsedContent.colors[4] = document.getElementById(`color5`).value;
+            updateContent(parsedContent);
+        }
+        document.getElementById(`color6`).onchange = () => {
+            parsedContent.colors[5] = document.getElementById(`color6`).value;
+            updateContent(parsedContent);
+        }
+
+        document.getElementById("gridColor").value = "<%= parsedContents.gridData.color %>".startsWith("#")? "<%= parsedContents.gridData.color %>" : colourNameToHex( "<%= parsedContents.gridData.color %>")
+        document.getElementById(`gridColor`).onchange = () => {
+            parsedContent.gridData.color = document.getElementById(`gridColor`).value;
+            updateContent(parsedContent);
+        }
+        document.getElementById(`gridWidth`).onchange = () => {
+            parsedContent.gridData.width = document.getElementById(`gridWidth`).value;
+            updateContent(parsedContent);
+        }
+        document.getElementById(`gridSize`).onchange = () => {
+            parsedContent.gridData.size = document.getElementById(`gridSize`).value;
+            updateContent(parsedContent);
+        }
+
+        function colourNameToHex(colour)
+        {
+            var colours = {"aliceblue":"#f0f8ff","antiquewhite":"#faebd7","aqua":"#00ffff","aquamarine":"#7fffd4","azure":"#f0ffff",
+                "beige":"#f5f5dc","bisque":"#ffe4c4","black":"#000000","blanchedalmond":"#ffebcd","blue":"#0000ff","blueviolet":"#8a2be2","brown":"#a52a2a","burlywood":"#deb887",
+                "cadetblue":"#5f9ea0","chartreuse":"#7fff00","chocolate":"#d2691e","coral":"#ff7f50","cornflowerblue":"#6495ed","cornsilk":"#fff8dc","crimson":"#dc143c","cyan":"#00ffff",
+                "darkblue":"#00008b","darkcyan":"#008b8b","darkgoldenrod":"#b8860b","darkgray":"#a9a9a9","darkgreen":"#006400","darkkhaki":"#bdb76b","darkmagenta":"#8b008b","darkolivegreen":"#556b2f",
+                "darkorange":"#ff8c00","darkorchid":"#9932cc","darkred":"#8b0000","darksalmon":"#e9967a","darkseagreen":"#8fbc8f","darkslateblue":"#483d8b","darkslategray":"#2f4f4f","darkturquoise":"#00ced1",
+                "darkviolet":"#9400d3","deeppink":"#ff1493","deepskyblue":"#00bfff","dimgray":"#696969","dodgerblue":"#1e90ff",
+                "firebrick":"#b22222","floralwhite":"#fffaf0","forestgreen":"#228b22","fuchsia":"#ff00ff",
+                "gainsboro":"#dcdcdc","ghostwhite":"#f8f8ff","gold":"#ffd700","goldenrod":"#daa520","gray":"#808080","green":"#008000","greenyellow":"#adff2f",
+                "honeydew":"#f0fff0","hotpink":"#ff69b4",
+                "indianred ":"#cd5c5c","indigo":"#4b0082","ivory":"#fffff0","khaki":"#f0e68c",
+                "lavender":"#e6e6fa","lavenderblush":"#fff0f5","lawngreen":"#7cfc00","lemonchiffon":"#fffacd","lightblue":"#add8e6","lightcoral":"#f08080","lightcyan":"#e0ffff","lightgoldenrodyellow":"#fafad2",
+                "lightgrey":"#d3d3d3","lightgreen":"#90ee90","lightpink":"#ffb6c1","lightsalmon":"#ffa07a","lightseagreen":"#20b2aa","lightskyblue":"#87cefa","lightslategray":"#778899","lightsteelblue":"#b0c4de",
+                "lightyellow":"#ffffe0","lime":"#00ff00","limegreen":"#32cd32","linen":"#faf0e6",
+                "magenta":"#ff00ff","maroon":"#800000","mediumaquamarine":"#66cdaa","mediumblue":"#0000cd","mediumorchid":"#ba55d3","mediumpurple":"#9370d8","mediumseagreen":"#3cb371","mediumslateblue":"#7b68ee",
+                "mediumspringgreen":"#00fa9a","mediumturquoise":"#48d1cc","mediumvioletred":"#c71585","midnightblue":"#191970","mintcream":"#f5fffa","mistyrose":"#ffe4e1","moccasin":"#ffe4b5",
+                "navajowhite":"#ffdead","navy":"#000080",
+                "oldlace":"#fdf5e6","olive":"#808000","olivedrab":"#6b8e23","orange":"#ffa500","orangered":"#ff4500","orchid":"#da70d6",
+                "palegoldenrod":"#eee8aa","palegreen":"#98fb98","paleturquoise":"#afeeee","palevioletred":"#d87093","papayawhip":"#ffefd5","peachpuff":"#ffdab9","peru":"#cd853f","pink":"#ffc0cb","plum":"#dda0dd","powderblue":"#b0e0e6","purple":"#800080",
+                "rebeccapurple":"#663399","red":"#ff0000","rosybrown":"#bc8f8f","royalblue":"#4169e1",
+                "saddlebrown":"#8b4513","salmon":"#fa8072","sandybrown":"#f4a460","seagreen":"#2e8b57","seashell":"#fff5ee","sienna":"#a0522d","silver":"#c0c0c0","skyblue":"#87ceeb","slateblue":"#6a5acd","slategray":"#708090","snow":"#fffafa","springgreen":"#00ff7f","steelblue":"#4682b4",
+                "tan":"#d2b48c","teal":"#008080","thistle":"#d8bfd8","tomato":"#ff6347","turquoise":"#40e0d0",
+                "violet":"#ee82ee",
+                "wheat":"#f5deb3","white":"#ffffff","whitesmoke":"#f5f5f5",
+                "yellow":"#ffff00","yellowgreen":"#9acd32"};
+
+            if (typeof colours[colour.toLowerCase()] != 'undefined')
+                return colours[colour.toLowerCase()];
+
+            return false;
+        }
+
+        <% } else if (displayname) { %>
+            window.onload = () => {
+                <% for (var i = 0; i < pageLength; i++) { %>
+                    <% pageContent = bookData.pages[i] %>
+                    const data = buildImagePreview(JSON.parse(`<%- JSON.stringify(pageContent) %>`));
+                    document.getElementById("content<%= i %>").innerHTML = `<img style="margin: 5px;" width="<%- pageContent.maxPageWidth/10 %>px" height="<%- pageContent.maxPageHeight/10 %>px" src="${data}">`;
+                <% } %>
+            };
+        <% } %>
+    </script>
+
+    <script src="/AjaxUpdater.js"></script>
+    <script src="/CanvasBuilder.js"></script>
+    <script src="/ImagePreviewer.js"></script>
+
+</body>
+</html>

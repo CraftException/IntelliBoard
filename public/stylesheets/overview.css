@@ -1,0 +1,125 @@
+/* IntelliBoard - Copyright (C) 2021 Moritz Kaufmann */
+/* Overview Stylesheets */
+
+/* Global Data */
+body {
+    margin: 0;
+    font-family: "Lato", sans-serif;
+}
+
+/* Sidebar */
+.sidebar {
+    margin: 0;
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+    padding: 0;
+    width: 200px;
+    background-color: #f1f1f1;
+    position: fixed;
+    height: 100%;
+    overflow: auto;
+}
+
+.sidebar a {
+    display: block;
+    color: black;
+    padding: 16px;
+    text-decoration: none;
+}
+
+.sidebar p {
+    display: block;
+    color: black;
+    padding: 6px;
+    box-shadow: 0 12px 16px 0 rgba(245,245,245,0.24), 0 17px 50px 0 rgba(245,245,245,0.24);
+    text-align: center;
+}
+
+.sidebar a.active {
+    color: #04AA6D;
+}
+
+.sidebar a:hover:not(.active) {
+    color: #555;
+}
+
+.sidebar .red:hover:not(.active) {
+    color: #ff0000;
+}
+
+div.content {
+    margin-left: 200px;
+    padding: 1px 16px;
+    height: 1000px;
+}
+
+@media screen and (max-width: 700px) {
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+    }
+    .sidebar a {float: left;}
+    div.content {margin-left: 0;}
+}
+
+@media screen and (max-width: 400px) {
+    .sidebar a {
+        text-align: center;
+        float: none;
+    }
+}
+
+/* Grid */
+.columns {
+    padding: 0 20px;
+    width: 100%;
+    display: grid;
+    grid-auto-rows: 100px;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-gap: 1em;
+    box-shadow: 0 12px 16px 0 rgba(245,245,245,0.24), 0 17px 50px 0 rgba(245,245,245,0.24);
+}
+
+.column {
+    color: #000000;
+    text-align: center;
+    background-color: #f1f1f1;
+    box-shadow: 0 12px 16px 0 rgba(49, 49, 49, 0.24), 0 17px 50px 0 rgba(245,245,245,0.24);
+}
+
+.column:hover {
+    cursor: pointer;
+    transition: 1s;
+    box-shadow: 0 12px 16px 0 rgba(245,245,245,0.24), 0 17px 50px 0 rgba(245,245,245,0.24);
+}
+
+/* Forms */
+input[type=text] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1.5px solid white;
+    color: black;
+    text-color: black;
+    background-color: #f1f1f1;
+    box-shadow: 0 12px 16px 0 rgba(49, 49, 49, 0.24), 0 17px 50px 0 rgba(245,245,245,0.24);
+    box-sizing: border-box;
+    border-radius: 2px;
+}
+
+button {
+    color: black;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    background-color: #f1f1f1;
+    box-shadow: 0 12px 16px 0 rgba(49, 49, 49, 0.24), 0 17px 50px 0 rgba(245,245,245,0.24);
+}
+
+button:hover {
+    transition: 2s;
+    box-shadow: 0 12px 16px 0 rgba(49, 49, 49, 0.24), 0 17px 50px 0 rgba(245,245,245,0.24);
+}

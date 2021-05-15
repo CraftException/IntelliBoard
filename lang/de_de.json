@@ -11,7 +11,8 @@
       "home": "Startseite",
       "board": "Tafel",
       "login": "Einloggen",
-      "register": "Registrieren"
+      "register": "Registrieren",
+      "overview": "Übersicht"
     },
     "descriptions": {
       "home": "Wilkommen zu IntelliBoard!"
@@ -37,8 +38,32 @@
       "username": "Benutzname",
       "password": "Passwort",
       "login": "Einloggen",
+      "alreadyExists": "Der Benutername oder die Email Adresse existiert bereits!",
       "passwordLost": "Password vergessen?",
       "register": "Neuen Account anlegen"
+    }
+  },
+  "overview": {
+    "sidebar": {
+      "header": "IntelliBoard",
+      "books": "Meine Bücher",
+      "newbook": "Buch Erstellen",
+      "settings": "Einstellungen",
+      "logout": "Abmelden"
+    },
+    "books": {
+      "backtooverview": "Zurück zur Übersicht",
+      "pages": "Seite(n)",
+      "addpage": "Seite hinzufügen",
+      "page": "Seiten"
+    },
+    "settings": {
+      "colors": "Farben",
+      "grid": "Raster"
+    },
+    "newbook": {
+      "nameplaceholder": "Name des Buches",
+      "buttonsubmit": "Buch erstellen"
     }
   },
   "error": {

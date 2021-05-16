@@ -43,7 +43,8 @@ export module ContentHelper {
                     maxPageHeight: 1080,
                     maxPageWidth: 1920,
                     contents: [],
-                    grid: false
+                    grid: false,
+                    border: []
                 }
             ]
         }]
@@ -56,12 +57,11 @@ export module ContentHelper {
 
     // Get a database
     export function getDatabase(token:string) {
-        return DatabaseHelper.selectData(database, "Database", { id: token }, {})[0].storage.replaceAll("`", "&#96;")
+        return DatabaseHelper.selectData(database, "Database", { id: token }, {})[0].storage.split("´").join("&#96;").split("`").join("&#96;")
     }
 
     // Update a database
     export function updateDatabase(token:string, contentUpdate) {
-        console.log(contentUpdate)
         DatabaseHelper.updateData(database, "Database", {id: token}, {$set: {storage: contentUpdate}})
     }
 

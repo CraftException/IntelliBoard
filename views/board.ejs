@@ -11,7 +11,7 @@
 
         <!--Tool Header-->
         <center><div class="header" id="header">
-            <%- include('partials/board/headerbar', { colors: colors }); %>
+            <%- include('partials/board/headerbar', { colors: JSON.parse(contents).colors }); %>
         </div></center>
 
         <!--Canvas Content-->
@@ -38,7 +38,7 @@
             <%- include('partials/board/toolbar', { toolbar: toolbar }); %>
         </div>
 
-        <%- include('partials/board/richtexteditor', { colors: colors }); %>
+        <%- include('partials/board/richtexteditor', { colors: JSON.parse(contents).colors }); %>
 
         <!-- Scripts for IntelliBoard -->
         <script>
@@ -51,6 +51,10 @@
             if(navigator.userAgent.indexOf("Firefox") != -1 ){
                 alert("Information for Firefox Users: This version of IntelliBoard contains some known Bugs for Firefox. Please use Google Chrome or other Chromium based Browsers for better experience with IntelliBoard!")
             }
+
+            var parsedContent = JSON.parse(`<%- contents %>`);
+            var book = "<%- book %>";
+            var pageid = "<%- pageid %>";
         </script>
         <script src="/GridManager.js"></script>
         <script src="/HeaderToolManager.js"></script>

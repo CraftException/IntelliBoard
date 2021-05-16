@@ -84,7 +84,7 @@
         var exports = {};
         function require(a) {}
 
-        var parsedContent = JSON.parse(`<%- JSON.stringify(parsedContents) %>`).replaceAll("&#96;", "´");
+        var parsedContent = JSON.parse((`<%- JSON.stringify(parsedContents) %>`).split("&#96;").join("Â´"));
 
         <% if (page == "settings") { %>
         document.getElementById("color1").value = "<%= parsedContents.colors[0] %>".startsWith("#")? "<%= parsedContents.colors[0] %>" : colourNameToHex( "<%= parsedContents.colors[0] %>")

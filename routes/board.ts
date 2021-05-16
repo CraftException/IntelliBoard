@@ -24,10 +24,11 @@ JSON.parse(fs.readFileSync("lang/languages.json", "utf-8")).forEach(lang => {
     // Render template in views/board.ejs
     res.render('board', {
       lang: loadLanguage(lang), // Language file
-      colors: JSON.parse(fs.readFileSync("Backend/colors.json", "utf-8")), // Color File
       toolbar: JSON.parse(fs.readFileSync("./Backend/toolbar.json", "utf-8")), // Toolbar File
       title: "board", // Title
-      contents: JSON.stringify(ContentHelper.getDatabase(getDatabaseID(req, res)))
+      contents: ContentHelper.getDatabase(getDatabaseID(req, res)), // Contents
+      pageid: req.query["id"],
+      book: req.query["book"]
     });
   });
 })

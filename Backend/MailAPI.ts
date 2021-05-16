@@ -26,7 +26,6 @@ export module MailAPI {
             text: "Click on the following link, to reset your password: " + token, // plain text body
             html: "Click <a href=" + token + ">here</a>, to reset your password.", // html body
         });
-        console.log("SEND Message")
 
     }
 

@@ -3,6 +3,7 @@
 
 // Import all Models
 import {BorderMordel, BrushContent, Content, Dimension, FontContent, GridData, LineContent, RectContent} from "./Model";
+import {setInterval} from "timers";
 
 // The Content Model for each User
 export interface IBStorage {
@@ -187,6 +188,37 @@ function addToCanvas(content:Content) {
             break;
     }
 }
+
+// Push data to the database
+function pushDataToDatabase() {
+    // Update page data
+    page.grid = grid; //@ts-ignore
+    page.border = borders;
+    page.contents = contents;
+
+    // Update page in the content list
+    var pageOffset = 0;
+    //@ts-ignore
+    parsedContent.content.forEach(contentBook => { //@ts-ignore
+        if(contentBook.displayname == book) { //@ts-ignore
+            parsedContent.content[pageOffset].pages[pageid] = page
+        }
+        pageOffset++;
+    });
+
+    // Update the content with an ajax request
+    //@ts-ignore
+    updateContent(parsedContent);
+
+    // Save the content again, after 5 seconds
+    setTimeout(() => pushDataToDatabase(), 3000);
+}
+
+// Update the content after 5 seconds
+setTimeout(() => pushDataToDatabase(), 3000);
+
+// Save the content when the window has been closed
+window.onunload = () => pushDataToDatabase();
 
 // Enable / Disable the grid
 function toggleGrid() {
@@ -607,6 +639,9 @@ window.onload = () => {
     canvas.addEventListener("blur", () => {
         updateCanvas();
     })
+
+    // Refresh the canvas
+    updateCanvas();
 
     console.log("Loaded IntelliBoard Listeners")
 }

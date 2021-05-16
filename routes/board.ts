@@ -35,6 +35,8 @@ JSON.parse(fs.readFileSync("lang/languages.json", "utf-8")).forEach(lang => {
 
 // Router to update Database
 router.post(`/update`, function (req, res, next): void {
+  res.setHeader('content-type', 'text/plain');
+
   if (isLoggedIn(req, res)) {
     if (req.body["newcontent"]) {
       ContentHelper.updateDatabase(getDatabaseID(req, res), req.body["newcontent"]);

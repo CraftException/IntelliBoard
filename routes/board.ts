@@ -26,7 +26,7 @@ JSON.parse(fs.readFileSync("lang/languages.json", "utf-8")).forEach(lang => {
       lang: loadLanguage(lang), // Language file
       toolbar: JSON.parse(fs.readFileSync("./Backend/toolbar.json", "utf-8")), // Toolbar File
       title: "board", // Title
-      contents: ContentHelper.getDatabase(getDatabaseID(req, res)), // Contents
+      rawContents: ContentHelper.getDatabase(getDatabaseID(req, res)), // Contents
       pageid: req.query["id"],
       book: req.query["book"]
     });
@@ -39,7 +39,7 @@ router.post(`/update`, function (req, res, next): void {
 
   if (isLoggedIn(req, res)) {
     if (req.body["newcontent"]) {
-      ContentHelper.updateDatabase(getDatabaseID(req, res), req.body["newcontent"]);
+      ContentHelper.updateDatabase(getDatabaseID(req, res), JSON.parse(req.body["newcontent"]));
       res.write("200 OK");
     } else {
       res.status(500).write("500 Server Error");

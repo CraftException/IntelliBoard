@@ -17,6 +17,7 @@ import * as overviewRouter from "./routes/overview";
 
 // APIs
 import {loadLanguage} from "./Backend/languages";
+import * as bodyParser from "body-parser";
 
 // Generate Express
 var app = express();
@@ -27,7 +28,12 @@ app.set('view engine', 'ejs');
 
 // Setup express details
 app.use(coookieparser())
-app.use(express.json({limit: '50mb'}));
+app.use(express.json({limit: '150mb'}));
+app.use(bodyParser.json({limit: '150mb'}));
+app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
+  limit: '150mb',
+  extended: true
+}));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'board')));

@@ -1,5 +1,6 @@
 import {FontContent} from "./Model";
 import {drawEraserToCanvas} from "./CanvasBuilder";
+import {setInterval} from "timers";
 
 function buildImagePreview(page) {
     const canvas = document.createElement("canvas")
@@ -47,14 +48,41 @@ function buildText(context:CanvasRenderingContext2D, content:FontContent) {
     var loaded = false;
 
     var img = new Image();
-    var url = content.data;
+    var url = generateBlob(content.rawData);
 
     img.onload = function () {
         img.src = url;
-        if (!loaded)
+        if (!loaded) {
             context.drawImage(img, content.position.x, content.position.y);
+        }
         loaded = true;
     }
 
     img.src = url;
+}
+
+// Generate blob url of html content
+function generateBlob(rawContent:string) { //@ts-ignore
+    rawContent = rawContent.replaceAll("<br>", "<br></br>").replaceAll("&nbsp;", " ")
+
+    // Generate SVG Data
+    var data = `<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080">` +
+        '<foreignObject width="100%" height="100%">' +
+        '<div xmlns="http://www.w3.org/1999/xhtml" style="font-size:20px">' +
+        `${rawContent}` +
+        '</div>' +
+        '</foreignObject>' +
+        '</svg>';
+
+    // Get Dom-URL
+    var DOMURL = window.URL || window.webkitURL || window;
+
+    // Create Blob
+    var svg = new Blob([data], {
+        type: 'image/svg+xml;charset=utf-8'
+    });
+    // @ts-ignore
+    var url = DOMURL.createObjectURL(svg);
+
+    return url;
 }

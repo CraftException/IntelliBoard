@@ -297,13 +297,13 @@ function canvas_mouseDown(e) {
         if (selectedSubTool == 'line') {
             lineData = {x1:getPosition(e).x,y1:getPosition(e).y,x2:0,y2:0};
         }
-        // Create empty react Data
+        // Create empty rect Data
         else if (selectedSubTool == 'hline') {
             rectData = {x:0,y:0,w:0,b:selectedWidth};
-        // Create empty react Data
+        // Create empty rect Data
         } else if (selectedSubTool == 'vline') {
             rectData = {x:0,y:0,w:selectedWidth,b:0};
-            // Create empty react Data
+        // Create empty rect Data
         } else if (selectedSubTool == 'rect') {
             rectData = {x:0,y:0,w:0,b:0};
         }

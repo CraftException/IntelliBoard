@@ -52,12 +52,12 @@ export module ContentHelper {
 
     // Generate an empty database
     export function generateDatabase(token:string) {
-        DatabaseHelper.insertData(database, "Database", {id: token, storage:JSON.stringify(defaultStorage)})
+        DatabaseHelper.insertData(database, "Database", {id: token, storage:defaultStorage})
     }
 
     // Get a database
     export function getDatabase(token:string) {
-        return DatabaseHelper.selectData(database, "Database", { id: token }, {})[0].storage.split("´").join("&#96;").split("`").join("&#96;")
+        return DatabaseHelper.selectData(database, "Database", { id: token }, {})[0].storage
     }
 
     // Update a database

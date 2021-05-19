@@ -2,24 +2,20 @@
   "name": "intelliboard-final",
   "description": "A minimalistic Paint Application, optimized for Whiteboards and Touchscreens.",
   "main": "bin/www",
-
   "version": "0.0.0",
   "author": {
     "name": "CraftException",
     "url": "https://github.craftexception.de"
   },
-
   "repository": {
     "type": "git",
     "url": "https://github.com/CraftException/IntelliBoard"
   },
   "license": "MIT",
-
   "scripts": {
     "start": "node bin/www",
     "compile-ts": "tsc --build"
   },
-
   "dependencies": {
     "@types/node": "^14.14.41",
     "cookie-parser": "~1.4.4",
@@ -30,6 +26,7 @@
     "http-errors": "~1.6.3",
     "mongodb": "^3.6.6",
     "nodemailer": "^6.5.0",
-    "password-hash": "^1.2.2"
+    "password-hash": "^1.2.2",
+    "body-parser": "^1.19.0"
   }
 }

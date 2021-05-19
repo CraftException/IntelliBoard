@@ -23,7 +23,7 @@ const router = express.Router();
 //Add all languages to the router
 JSON.parse(fs.readFileSync("lang/languages.json", "utf-8")).forEach(lang => {
 
-    // Login Router
+    // Overview Router
     router.get(`/${lang}/overview`, function (req, res, next): void {
         if (isLoggedIn(req, res)) {
             res.render('overview', {
@@ -31,8 +31,38 @@ JSON.parse(fs.readFileSync("lang/languages.json", "utf-8")).forEach(lang => {
                 title: "overview", // Title
                 page: req.query["page"] || "my_books",
                 displayname: req.query["displayname"],
-                contents: JSON.parse(ContentHelper.getDatabase(getDatabaseID(req, res)))
+                contents: ContentHelper.getDatabase(getDatabaseID(req, res))
             });
+        } else {
+            res.redirect(`/${lang}/login`)
+        }
+    });
+
+    // Post Router to add a book
+    router.post(`/${lang}/overview`, function (req, res, next):void {
+        if (isLoggedIn(req, res)) {
+            // Fetch Database
+            console.log(ContentHelper.getDatabase(getDatabaseID(req, res)))
+            var database = ContentHelper.getDatabase(getDatabaseID(req, res));
+            // Add Book
+            database.content.push({
+                displayname: req.body["name"],
+                pages: [
+                    {
+                        pageid: 0,
+                        maxPageHeight: 1080,
+                        maxPageWidth: 1920,
+                        contents: [],
+                        grid: false,
+                        border: []
+                    }
+                ]
+            });
+            // Update Database
+            ContentHelper.updateDatabase(getDatabaseID(req, res), database);
+
+            // Redirect to start page
+            setTimeout(res.redirect(`/${lang}/overview?page=my_books`), 250);
         } else {
             res.redirect(`/${lang}/login`)
         }

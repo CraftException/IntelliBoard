@@ -27,7 +27,7 @@ function buildText(content:FontContent) {
     if (!buildedImages[content.data]) {
         // create image and fetch blob url
         var img = new Image();
-        var url = content.data;
+        var url = generateBlob(content.data);
 
         // Draw image, once the image is loaded and push the builded image to the builded images
         img.onload = function () {

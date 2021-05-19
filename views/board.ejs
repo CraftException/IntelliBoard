@@ -1,6 +1,7 @@
 <!-- IntelliBoard - Copyright (C) 2021 Moritz Kaufmann -->
 <!-- Board Template -->
 
+<% contents = rawContents %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,7 +12,7 @@
 
         <!--Tool Header-->
         <center><div class="header" id="header">
-            <%- include('partials/board/headerbar', { colors: JSON.parse(contents).colors }); %>
+            <%- include('partials/board/headerbar', { colors: contents.colors }); %>
         </div></center>
 
         <!--Canvas Content-->
@@ -38,7 +39,7 @@
             <%- include('partials/board/toolbar', { toolbar: toolbar }); %>
         </div>
 
-        <%- include('partials/board/richtexteditor', { colors: JSON.parse(contents).colors }); %>
+        <%- include('partials/board/richtexteditor', { colors: contents.colors }); %>
 
         <!-- Scripts for IntelliBoard -->
         <script>
@@ -52,7 +53,7 @@
                 alert("Information for Firefox Users: This version of IntelliBoard contains some known Bugs for Firefox. Please use Google Chrome or other Chromium based Browsers for better experience with IntelliBoard!")
             }
 
-            var parsedContent = JSON.parse(`<%- contents %>`);
+            var parsedContent = JSON.parse(`<%- JSON.stringify(contents) %>`);
             var book = "<%- book %>";
             var pageid = "<%- pageid %>";
         </script>

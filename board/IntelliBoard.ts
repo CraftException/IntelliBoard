@@ -341,7 +341,7 @@ function canvas_mouseDown(e) {
 // Save the text content of the current rich text box
 function saveTextContent() {//@ts-ignore
     //@ts-ignore
-    /* Fetch raw Content */ contents[currentBox].rawData = document.getElementById("editcontent").innerHTML;//@ts-ignore
+    /* Fetch raw Content */ contents[currentBox].rawData = document.getElementById("editcontent").innerHTML.toString().replaceAll("\"", "'");//@ts-ignore
     /* Generate blob URI */ contents[currentBox].data = generateBlob(contents[currentBox].rawData);//@ts-ignore
 
     /* Calculate font size */const actualFontSize = getActualFontSize(contents[currentBox]);

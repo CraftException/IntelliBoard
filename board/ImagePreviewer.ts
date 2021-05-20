@@ -2,7 +2,7 @@ import {FontContent} from "./Model";
 import {drawEraserToCanvas} from "./CanvasBuilder";
 import {setInterval} from "timers";
 
-function buildImagePreview(page) {
+function buildImagePreview(page, id) {
     const canvas = document.createElement("canvas")
     const context = canvas.getContext("2d")
     context.canvas.width = page.maxPageWidth

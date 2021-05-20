@@ -26,6 +26,32 @@ JSON.parse(fs.readFileSync("lang/languages.json", "utf-8")).forEach(lang => {
     // Overview Router
     router.get(`/${lang}/overview`, function (req, res, next): void {
         if (isLoggedIn(req, res)) {
+            // Add Page if the button is pressed
+            if (req.query["addpage"]) {
+                // Fetch Database
+                var database = ContentHelper.getDatabase(getDatabaseID(req, res));
+
+                // Add Page
+                database.content.forEach(contentBook => { //@ts-ignore
+                    if(contentBook.displayname == req.query["displayname"]) { //@ts-ignore
+                        contentBook.pages.push({
+                            pageid: contentBook.pages.length,
+                            maxPageWidth: 1920,
+                            maxPageHeight: 1080,
+                            contents: [],
+                            grid: false,
+                            border: []
+                        })
+                    }
+                });
+
+                // Update Database
+                ContentHelper.updateDatabase(getDatabaseID(req, res), database);
+
+                // Redirect to start page
+                setTimeout(res.redirect(`/${lang}/overview?page=my_books&displayname=${req.query["displayname"]}`), 250);
+            }
+
             res.render('overview', {
                 lang: loadLanguage(lang), // Language file
                 title: "overview", // Title
@@ -34,7 +60,7 @@ JSON.parse(fs.readFileSync("lang/languages.json", "utf-8")).forEach(lang => {
                 contents: ContentHelper.getDatabase(getDatabaseID(req, res))
             });
         } else {
-            res.redirect(`/${lang}/login`)
+            res.redirect(`/${lang}/login`);
         }
     });
 
@@ -42,7 +68,6 @@ JSON.parse(fs.readFileSync("lang/languages.json", "utf-8")).forEach(lang => {
     router.post(`/${lang}/overview`, function (req, res, next):void {
         if (isLoggedIn(req, res)) {
             // Fetch Database
-            console.log(ContentHelper.getDatabase(getDatabaseID(req, res)))
             var database = ContentHelper.getDatabase(getDatabaseID(req, res));
             // Add Book
             database.content.push({

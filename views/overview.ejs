@@ -168,9 +168,9 @@
     <% } else if (displayname) { %>
     window.onload = () => {
         <% for (var i = 0; i < pageLength; i++) { %>
-        <% pageContent = bookData.pages[i] %>
-        const data = buildImagePreview(JSON.parse(`<%- JSON.stringify(pageContent) %>`));
-        document.getElementById("content<%= i %>").innerHTML = `<img style="margin: 5px;" width="<%- pageContent.maxPageWidth/10 %>px" height="<%- pageContent.maxPageHeight/10 %>px" src="${data}">`;
+            <% pageContent = bookData.pages[i] %>
+            const data<%= i %> = buildImagePreview(JSON.parse(`<%- JSON.stringify(pageContent) %>`));
+            setTimeout(() => document.getElementById("content<%= i %>").innerHTML = `<img id="image<%= i %>" style="margin: 5px;" width="<%- pageContent.maxPageWidth/10 %>px" height="<%- pageContent.maxPageHeight/10 %>px" src="${data<%= i %>}">`, 2500);
         <% } %>
     };
     <% } %>
